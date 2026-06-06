@@ -1,8 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #f6f8fb;
+  --foreground: #111827;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --line: rgba(15, 23, 42, 0.1);
+  --line-strong: rgba(15, 23, 42, 0.16);
+  --muted: #64748b;
+  --muted-2: #94a3b8;
+  --accent: #2563eb;
+  --accent-dark: #0f3d91;
+  --accent-soft: #eff6ff;
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --radius: 10px;
+  --radius-sm: 7px;
+  --shadow-console: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06);
+  --shadow-lift: 0 2px 4px rgba(15, 23, 42, 0.05), 0 16px 38px rgba(15, 23, 42, 0.1);
 }
 
 @theme inline {
@@ -16,6 +32,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 button,
@@ -32,4 +51,34 @@ button {
 ::selection {
   background: #bfdbfe;
   color: #0f172a;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+.console-mono {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

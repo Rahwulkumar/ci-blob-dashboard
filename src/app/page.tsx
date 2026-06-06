@@ -15,7 +15,7 @@ export default function Home() {
     <AppShell>
       <PageHeader
         eyebrow="Overview"
-        title="Anti-Piracy Report Workspaces"
+        title="Anti-piracy report workspaces"
         description="Monitor client folders, active events, report dates, and CSV files in Azure Blob Storage."
       />
 
@@ -28,9 +28,9 @@ export default function Home() {
         ]}
       />
 
-      <div className="mb-4 flex items-end justify-between">
+      <div className="mb-3 flex items-end justify-between">
         <div>
-          <h2 className="text-sm font-semibold tracking-[-0.01em] text-slate-950">Client Workspaces</h2>
+          <h2 className="text-sm font-semibold tracking-[-0.01em] text-slate-950">Client workspaces</h2>
           <p className="mt-1 text-xs text-slate-500">Choose a client to inspect event folders and uploaded CSV reports.</p>
         </div>
         <div className="hidden rounded-md border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-500 md:block">

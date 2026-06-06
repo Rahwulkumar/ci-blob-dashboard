@@ -11,13 +11,13 @@ export function KpiStrip({
       {items.map((item) => (
         <div
           key={item.label}
-          className="relative min-h-[118px] overflow-hidden border-b border-slate-100 p-5 last:border-b-0 md:[&:nth-child(odd)]:border-r xl:border-b-0 xl:border-r xl:last:border-r-0"
+          className="relative min-h-[106px] overflow-hidden border-b border-[var(--line)] px-5 py-4 last:border-b-0 md:[&:nth-child(odd)]:border-r xl:border-b-0 xl:border-r xl:last:border-r-0"
         >
-          <div className="pointer-events-none absolute -bottom-3 right-1 select-none font-mono text-[58px] font-bold leading-none tracking-tighter text-blue-600/[0.04]">
+          <div className="pointer-events-none absolute -bottom-2 right-1 select-none font-mono text-[56px] font-bold leading-none tracking-tighter text-blue-600/[0.045]">
             {item.value.replace(/[^\d.%]/g, "")}
           </div>
           <div className="relative mb-3 flex items-center justify-between gap-3">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--muted-2)]">
               {item.label}
             </span>
             <span
@@ -28,10 +28,10 @@ export function KpiStrip({
               {item.delta}
             </span>
           </div>
-          <div className="relative font-mono text-[28px] font-semibold leading-none tracking-[-0.04em] text-slate-950">
+          <div className="console-mono relative text-[27px] font-semibold leading-none tracking-[-0.04em] text-slate-950">
             {item.value}
           </div>
-          <div className="relative mt-2 text-[11px] text-slate-400">vs last report cycle</div>
+          <div className="relative mt-2 text-[11px] text-[var(--muted-2)]">vs last report cycle</div>
         </div>
       ))}
     </Card>

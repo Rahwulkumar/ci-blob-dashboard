@@ -24,12 +24,12 @@ export function UploadForm() {
   const blobPath = `${clientId || "client-slug"}/${eventSlug}/${reportDate || "YYYY-MM-DD"}/${slugify(fileName.replace(/\.csv$/i, "")) || "report"}.csv`;
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[1fr_360px]">
-      <Card className="p-5">
-        <form className="space-y-5">
+    <div className="grid gap-4 lg:grid-cols-[1fr_360px]">
+      <Card className="p-[18px]">
+        <form className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             <label className="space-y-2">
-              <span className="text-sm font-medium text-slate-700">Client</span>
+              <span className="text-xs font-semibold text-slate-700">Client</span>
               <Select
                 value={clientId}
                 onChange={(event) => {
@@ -45,7 +45,7 @@ export function UploadForm() {
               </Select>
             </label>
             <label className="space-y-2">
-              <span className="text-sm font-medium text-slate-700">Event / series</span>
+              <span className="text-xs font-semibold text-slate-700">Event / series</span>
               <Select value={eventId || selectedEvent?.id || ""} onChange={(event) => setEventId(event.target.value)}>
                 {eventOptions.map((event) => (
                   <option key={event.id} value={event.id}>
@@ -57,19 +57,19 @@ export function UploadForm() {
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <label className="space-y-2">
-              <span className="text-sm font-medium text-slate-700">Report date</span>
+              <span className="text-xs font-semibold text-slate-700">Report date</span>
               <Input type="date" value={reportDate} onChange={(event) => setReportDate(event.target.value)} />
             </label>
             <label className="space-y-2">
-              <span className="text-sm font-medium text-slate-700">File name preview</span>
+              <span className="text-xs font-semibold text-slate-700">File name preview</span>
               <Input value={fileName} onChange={(event) => setFileName(event.target.value)} />
             </label>
           </div>
           <UploadDropzone />
           <label className="block space-y-2">
-            <span className="text-sm font-medium text-slate-700">Notes</span>
+            <span className="text-xs font-semibold text-slate-700">Notes</span>
             <textarea
-              className="min-h-24 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="min-h-20 w-full rounded-[var(--radius-sm)] border border-[var(--line-strong)] bg-white px-3 py-2 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
               placeholder="Optional context for this report upload"
             />
           </label>
@@ -82,10 +82,10 @@ export function UploadForm() {
         </form>
       </Card>
       <div className="space-y-5">
-        <Card className="p-5">
-          <h2 className="text-sm font-semibold text-slate-950">Blob path preview</h2>
-          <p className="mt-2 text-sm text-slate-500">The server upload route will write the CSV to this folder structure.</p>
-          <div className="mt-4 rounded-lg bg-slate-950 p-4 font-mono text-xs leading-6 text-blue-100">
+        <Card className="p-[18px]">
+          <h2 className="text-[13px] font-semibold text-slate-950">Blob path preview</h2>
+          <p className="mt-2 text-xs leading-5 text-slate-500">The server upload route will write the CSV to this folder structure.</p>
+          <div className="console-mono mt-4 rounded-[var(--radius-sm)] bg-[#0B1220] p-4 text-xs leading-6 text-blue-100">
             raw-csv-reports/
             <br />
             {blobPath}
