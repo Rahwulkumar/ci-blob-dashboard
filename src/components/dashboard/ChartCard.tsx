@@ -18,7 +18,7 @@ export function ChartCard({ data }: { data: { month: string; reports: number }[]
           <p className="mt-1 text-xs text-slate-500">CSV uploads indexed across clients</p>
         </div>
       </div>
-      <div className="h-72 overflow-hidden rounded-lg border border-slate-100 bg-gradient-to-b from-blue-50/70 to-white">
+      <div className="h-72 overflow-hidden rounded-[var(--radius-sm)] border border-[var(--line)] bg-[var(--surface-2)]">
         <svg viewBox="0 0 620 260" className="h-full w-full" role="img" aria-label="Reports by month chart">
           <defs>
             <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">

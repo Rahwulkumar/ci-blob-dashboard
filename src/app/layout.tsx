@@ -5,16 +5,21 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "CII Dashboard",
-  description: "Azure Blob CSV report management for cricket infringement reports",
+  title: "CII Dashboard - Anti-Piracy Report Management",
+  description:
+    "Monitor client folders, active events, report dates, and CSV files in Azure Blob Storage. Cricket Infringement Intelligence platform.",
+  keywords: ["cricket", "anti-piracy", "dashboard", "blob storage", "CSV reports"],
+  authors: [{ name: "CII Team" }],
 };
 
 export default function RootLayout({
