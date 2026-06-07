@@ -14,8 +14,13 @@ export function RecentReportsTable({ reports }: { reports: ReportFile[] }) {
   return (
     <Card className="overflow-hidden">
       <div className="border-b border-[var(--line)] px-4 py-3">
-        <h2 className="text-[13px] font-semibold text-slate-950">Recent reports</h2>
-        <p className="mt-1 text-xs text-[var(--muted)]">Latest CSV files available in blob storage</p>
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <h2 className="text-[13px] font-semibold text-slate-950">Recent reports</h2>
+            <p className="mt-1 text-xs text-[var(--muted)]">Latest CSV files available in blob storage</p>
+          </div>
+          <span className="coordinate-tag hidden sm:inline">CSV / INDEX / LIVE</span>
+        </div>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[760px] border-collapse text-left">
@@ -52,6 +57,10 @@ export function RecentReportsTable({ reports }: { reports: ReportFile[] }) {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="flex items-center justify-between border-t border-[var(--line)] px-4 py-2 text-[11px] text-[var(--muted)]">
+        <span>Showing {reports.length} of {reports.length} report files</span>
+        <span className="hidden sm:inline">Client-confidential. Do not redistribute.</span>
       </div>
     </Card>
   );

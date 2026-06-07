@@ -14,6 +14,7 @@ export function WorkspaceCard({ client }: { client: Client }) {
             <div className="flex h-9 w-9 items-center justify-center rounded-[9px] border border-blue-100 bg-blue-50 text-blue-700">
               <FolderKanban className="h-[17px] w-[17px]" aria-hidden="true" />
             </div>
+            <span className="coordinate-tag">{client.id.slice(0, 12)}</span>
             <Badge tone={client.status === "Active" ? "success" : "warning"}>
               {client.status}
             </Badge>

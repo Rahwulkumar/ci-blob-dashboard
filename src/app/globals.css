@@ -19,6 +19,7 @@
   --radius-sm: 7px;
   --shadow-console: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06);
   --shadow-lift: 0 2px 4px rgba(15, 23, 42, 0.05), 0 16px 38px rgba(15, 23, 42, 0.1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
@@ -29,7 +30,11 @@
 }
 
 body {
-  background: var(--background);
+  background:
+    linear-gradient(rgba(37, 99, 235, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.025) 1px, transparent 1px),
+    var(--background);
+  background-size: 26px 26px;
   color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -70,6 +75,51 @@ button {
 .console-mono {
   font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+.panel-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 3px 8px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.panel-label::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.coordinate-tag {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+.hatch-panel {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(37, 99, 235, 0.06) 0,
+      rgba(37, 99, 235, 0.06) 1px,
+      transparent 1px,
+      transparent 9px
+    ),
+    var(--surface);
 }
 
 @media (prefers-reduced-motion: reduce) {

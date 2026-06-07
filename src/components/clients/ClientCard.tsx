@@ -21,7 +21,10 @@ export function ClientCard({ client }: { client: Client }) {
               <p className="mt-1 text-xs text-[var(--muted)]">{client.eventsCount} events tracked</p>
             </div>
           </div>
-          <Badge tone={client.status === "Active" ? "success" : "warning"}>{client.status}</Badge>
+          <div className="flex flex-col items-end gap-2">
+            <span className="coordinate-tag">{client.id.slice(0, 10)}</span>
+            <Badge tone={client.status === "Active" ? "success" : "warning"}>{client.status}</Badge>
+          </div>
         </div>
         <div className="mt-5 grid grid-cols-2 gap-2">
           <div className="rounded-[var(--radius-sm)] border border-slate-100 bg-slate-50 p-3">

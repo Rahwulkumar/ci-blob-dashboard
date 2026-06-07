@@ -9,6 +9,7 @@ export function EventCard({ event }: { event: EventSeries }) {
       <Card className="h-full p-[18px] transition group-hover:-translate-y-0.5 group-hover:border-blue-300 group-hover:shadow-[var(--shadow-lift)]">
         <div className="flex items-start justify-between gap-3">
           <div>
+            <div className="coordinate-tag mb-2">{event.id.slice(0, 18)}</div>
             <h2 className="text-[13px] font-semibold text-slate-950">{event.name}</h2>
             <p className="mt-2 flex items-center gap-2 text-xs text-[var(--muted)]">
               <CalendarDays className="h-3.5 w-3.5 text-blue-500" aria-hidden="true" />
