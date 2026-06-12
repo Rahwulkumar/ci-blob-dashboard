@@ -15,10 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CII Dashboard - Anti-Piracy Report Management",
+  title: "CII Platform — Anti-Piracy Intelligence",
   description:
-    "Monitor client folders, active events, report dates, and CSV files in Azure Blob Storage. Cricket Infringement Intelligence platform.",
-  keywords: ["cricket", "anti-piracy", "dashboard", "blob storage", "CSV reports"],
+    "Monitor client engagements, event coverage, and enforcement intelligence reports. Cricket Infringement Intelligence platform.",
+  keywords: ["cricket", "anti-piracy", "dashboard", "intelligence", "reports"],
   authors: [{ name: "CII Team" }],
 };
 

@@ -1,101 +1,94 @@
-import { Activity, Cloud, Database, Server } from "lucide-react";
+import Link from "next/link";
+import { ClientRows, ClientRowsHeader } from "@/components/clients/ClientRows";
 import { KpiStrip } from "@/components/dashboard/KpiStrip";
+import { LastUpdated } from "@/components/dashboard/LastUpdated";
 import { RecentReportsTable } from "@/components/dashboard/RecentReportsTable";
-import { WorkspaceCard } from "@/components/dashboard/WorkspaceCard";
+import { ReportsTrendChart } from "@/components/dashboard/ReportsTrendChart";
 import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { containerName } from "@/lib/constants";
+import { CardHeader } from "@/components/ui/Card";
 import { clients, events, reports, reportsByMonth } from "@/lib/mock-data";
 
+const services = [
+  "Report ingestion",
+  "Indexing engine",
+  "Monitoring pipeline",
+  "Delivery service",
+] as const;
+
 export default function Home() {
-  const latestUpload = reports.map((report) => report.reportDate).sort().at(-1);
+  const latestReport = reports.map((report) => report.reportDate).sort().at(-1);
   const activeClients = clients.filter((client) => client.status === "Active").length;
 
   return (
     <AppShell>
       <PageHeader
-        eyebrow="Overview"
-        title="Anti-piracy report workspaces"
-        description="Monitor client folders, active events, and CSV reports uploaded to Azure Blob Storage."
+        title="Dashboard"
+        description="Portfolio performance, event coverage, and the latest intelligence reports."
+        actions={<LastUpdated />}
       />
 
       <KpiStrip
         items={[
-          { label: "Clients", value: String(clients.length), delta: "+3", up: true },
-          { label: "Events", value: String(events.length), delta: "+12%", up: true },
-          { label: "Reports", value: String(reports.length), delta: "+18%", up: true },
-          { label: "Latest upload", value: latestUpload ?? "N/A", delta: "Live", up: true },
+          { label: "Clients", value: String(clients.length), delta: "+3" },
+          { label: "Active events", value: String(events.length), delta: "+12%" },
+          { label: "Reports delivered", value: String(reports.length), delta: "+18%" },
+          {
+            label: "Latest report",
+            value: latestReport ?? "N/A",
+            delta: "Live",
+            description: "synced automatically",
+          },
         ]}
       />
 
-      <div className="grid gap-5 xl:grid-cols-[1fr_320px]">
-        <section>
-          <div className="mb-3 flex items-end justify-between gap-3">
-            <div>
-              <h2 className="text-[14px] font-semibold text-[var(--text-heading)]">Client workspaces</h2>
-              <p className="mt-1 text-xs text-[var(--text-muted)]">
-                {clients.length} clients, {reportsByMonth.at(-1)?.reports ?? 0} uploads this month
-              </p>
-            </div>
-            <div className="hidden rounded-[var(--radius-sm)] border border-[var(--line)] bg-white px-2.5 py-1 text-[11px] font-medium text-[var(--text-muted)] sm:block">
-              {activeClients} active
-            </div>
-          </div>
-
-          <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
-            {clients.map((client) => (
-              <WorkspaceCard key={client.id} client={client} />
-            ))}
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <section className="surface overflow-hidden">
+          <CardHeader
+            title="Report volume"
+            subtitle="Reports delivered per month"
+            action={<span className="text-[11px] text-(--text-faint)">Last 6 months</span>}
+          />
+          <div className="px-5 pb-4 pt-3">
+            <ReportsTrendChart data={[...reportsByMonth]} />
           </div>
         </section>
 
-        <aside className="space-y-3">
+        <aside className="flex flex-col gap-6">
           <section className="surface overflow-hidden">
-            <div className="flex items-center gap-2 border-b border-[var(--line)] px-4 py-3">
-              <Server className="h-4 w-4 text-[var(--accent)]" aria-hidden="true" />
-              <h2 className="text-[13px] font-semibold text-[var(--text-heading)]">System status</h2>
-              <span className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-[var(--green-border)] bg-[var(--green-bg)] px-2 py-0.5 text-[11px] font-medium text-[var(--success)]">
-                <span className="dot dot-green h-[5px] w-[5px]" />
-                Operational
-              </span>
-            </div>
-
-            <div className="space-y-3 p-4">
+            <CardHeader title="This week" />
+            <div className="divide-y divide-(--border-muted)">
               {[
-                { icon: Cloud, label: "Storage", value: "Azure Blob", tone: "green" },
-                { icon: Database, label: "Container", value: containerName, tone: "green" },
-                { icon: Activity, label: "Ingest API", value: "Server-side", tone: "green" },
-                { icon: Server, label: "Mode", value: "Mock data", tone: "amber" },
-              ].map(({ icon: Icon, label, value, tone }) => (
-                <div key={label} className="flex items-center justify-between gap-3">
-                  <div className="flex min-w-0 items-center gap-2">
-                    <Icon className="h-3.5 w-3.5 shrink-0 text-[var(--text-faint)]" aria-hidden="true" />
-                    <span className="text-xs text-[var(--text-muted)]">{label}</span>
-                  </div>
-                  <div className="flex min-w-0 items-center gap-2">
-                    <span className="console-mono truncate text-xs font-medium text-[var(--text-body)]">{value}</span>
-                    <span className={`dot h-[5px] w-[5px] ${tone === "green" ? "dot-green" : "dot-amber"}`} />
-                  </div>
+                ["Reports indexed today", "4"],
+                ["Pending review", "1"],
+                ["Active clients", String(activeClients)],
+                ["Events in coverage", String(events.length)],
+              ].map(([label, value]) => (
+                <div key={label} className="flex items-center justify-between px-5 py-2.75">
+                  <span className="text-xs text-(--text-muted)">{label}</span>
+                  <span className="t-num text-[13px] font-semibold text-(--text-heading)">
+                    {value}
+                  </span>
                 </div>
               ))}
             </div>
           </section>
 
           <section className="surface overflow-hidden">
-            <div className="flex items-center gap-2 border-b border-[var(--line)] px-4 py-3">
-              <Activity className="h-4 w-4 text-[var(--accent)]" aria-hidden="true" />
-              <h2 className="text-[13px] font-semibold text-[var(--text-heading)]">Activity</h2>
-            </div>
-            <div className="divide-y divide-[var(--border-muted)]">
-              {[
-                ["Indexed today", "4"],
-                ["Pending review", "1"],
-                ["Active clients", String(activeClients)],
-                ["Events this month", String(events.length)],
-              ].map(([label, value]) => (
-                <div key={label} className="flex items-center justify-between px-4 py-3">
-                  <span className="text-xs text-[var(--text-muted)]">{label}</span>
-                  <span className="console-mono text-[13px] font-semibold text-[var(--text-heading)]">{value}</span>
+            <CardHeader
+              title="System status"
+              action={
+                <span className="flex items-center gap-1.5 text-[11px] font-medium text-(--success)">
+                  <span className="dot dot-green h-1.5 w-1.5" aria-hidden="true" />
+                  Operational
+                </span>
+              }
+            />
+            <div className="divide-y divide-(--border-muted)">
+              {services.map((service) => (
+                <div key={service} className="flex items-center justify-between px-5 py-2.75">
+                  <span className="text-xs text-(--text-muted)">{service}</span>
+                  <span className="dot dot-green h-1.5 w-1.5" aria-hidden="true" />
                 </div>
               ))}
             </div>
@@ -103,7 +96,24 @@ export default function Home() {
         </aside>
       </div>
 
-      <div className="mt-5">
+      <section className="surface mt-6 overflow-hidden">
+        <CardHeader
+          title="Clients"
+          subtitle={`${activeClients} of ${clients.length} active`}
+          action={
+            <Link
+              href="/clients"
+              className="text-xs font-medium text-(--accent) transition-colors hover:text-(--accent-dark)"
+            >
+              View all
+            </Link>
+          }
+        />
+        <ClientRowsHeader />
+        <ClientRows clients={clients} />
+      </section>
+
+      <div className="mt-6">
         <RecentReportsTable reports={reports} />
       </div>
     </AppShell>
