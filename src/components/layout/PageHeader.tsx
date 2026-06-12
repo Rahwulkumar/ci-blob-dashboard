@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 
 export function PageHeader({
-  eyebrow,
   title,
   description,
   actions,
@@ -12,17 +11,21 @@ export function PageHeader({
   actions?: ReactNode;
 }) {
   return (
-    <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-      <div>
-        {eyebrow && (
-          <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-600">
-            {eyebrow}
-          </div>
-        )}
-        <h1 className="text-[15px] font-semibold tracking-[-0.01em] text-slate-950">{title}</h1>
-        {description && <p className="mt-1 max-w-3xl text-xs leading-5 text-slate-500">{description}</p>}
+    <header className="mb-8">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="text-[24px] font-semibold leading-8 tracking-tight text-(--text-heading)">
+            {title}
+          </h1>
+          {description && (
+            <p className="mt-1 max-w-2xl text-[13px] leading-5.5 text-(--text-muted)">
+              {description}
+            </p>
+          )}
+        </div>
+        {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
       </div>
-      {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
-    </div>
+      <div className="mt-6 h-px bg-(--line)" aria-hidden="true" />
+    </header>
   );
 }

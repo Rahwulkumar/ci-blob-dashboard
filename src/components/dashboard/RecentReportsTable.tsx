@@ -1,58 +1,98 @@
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
-import { Card } from "@/components/ui/Card";
+import { CardHeader } from "@/components/ui/Card";
+import { getClient, getEvent } from "@/lib/mock-data";
 import { formatBytes } from "@/lib/utils";
 import type { ReportFile } from "@/types/report";
 
 function statusTone(status: ReportFile["status"]) {
-  if (status === "Indexed") return "success";
-  if (status === "Review") return "warning";
-  return "info";
+  if (status === "Indexed") return "success" as const;
+  if (status === "Review") return "warning" as const;
+  return "info" as const;
 }
 
 export function RecentReportsTable({ reports }: { reports: ReportFile[] }) {
   return (
-    <Card className="overflow-hidden">
-      <div className="border-b border-slate-200 px-5 py-4">
-        <h2 className="text-sm font-semibold text-slate-950">Recent reports</h2>
-        <p className="mt-1 text-xs text-slate-500">Latest CSV files available in blob storage</p>
-      </div>
+    <section className="surface overflow-hidden">
+      <CardHeader
+        title="Recent reports"
+        action={
+          <Link
+            href="/clients"
+            className="text-xs font-medium text-(--accent) transition-colors hover:text-(--accent-dark)"
+          >
+            View all clients
+          </Link>
+        }
+      />
+
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[760px] border-collapse text-left">
-          <thead className="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
+        <table className="w-full min-w-170 border-collapse text-left">
+          <thead className="border-b border-(--line) bg-(--surface-2)">
             <tr>
-              <th className="px-5 py-3">File</th>
-              <th className="px-5 py-3">Report date</th>
-              <th className="px-5 py-3">Size</th>
-              <th className="px-5 py-3">Status</th>
-              <th className="px-5 py-3">Action</th>
+              <th className="t-label-xs px-5 py-2 font-semibold">Report</th>
+              <th className="t-label-xs px-5 py-2 font-semibold">Client</th>
+              <th className="t-label-xs px-5 py-2 font-semibold">Date</th>
+              <th className="t-label-xs px-5 py-2 text-right font-semibold">Size</th>
+              <th className="t-label-xs px-5 py-2 font-semibold">Status</th>
+              <th className="px-5 py-2" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 text-sm">
-            {reports.map((report) => (
-              <tr key={report.id} className="transition hover:bg-blue-50/40">
-                <td className="max-w-md px-5 py-4">
-                  <div className="truncate font-medium text-slate-950">{report.fileName}</div>
-                  <div className="mt-1 truncate font-mono text-xs text-slate-400">{report.blobPath}</div>
-                </td>
-                <td className="px-5 py-4 text-slate-600">{report.reportDate}</td>
-                <td className="px-5 py-4 text-slate-600">{formatBytes(report.size)}</td>
-                <td className="px-5 py-4">
-                  <Badge tone={statusTone(report.status)}>{report.status}</Badge>
-                </td>
-                <td className="px-5 py-4">
-                  <Link
-                    className="text-sm font-semibold text-blue-600 hover:text-blue-700"
-                    href={`/clients/${report.clientId}/events/${report.eventId}`}
-                  >
-                    View
-                  </Link>
-                </td>
-              </tr>
-            ))}
+          <tbody className="divide-y divide-(--border-muted)">
+            {reports.map((report) => {
+              const client = getClient(report.clientId);
+              const event = getEvent(report.clientId, report.eventId);
+
+              return (
+                <tr key={report.id} className="tr-hover">
+                  <td className="max-w-85 px-5 py-3">
+                    <Link
+                      href={`/clients/${report.clientId}/events/${report.eventId}`}
+                      className="block"
+                    >
+                      <span
+                        className="block truncate text-[13px] font-medium text-(--text-heading)"
+                        title={report.fileName}
+                      >
+                        {report.fileName}
+                      </span>
+                      <span className="mt-0.5 block truncate text-[11.5px] text-(--text-faint)">
+                        {event?.name ?? "—"}
+                      </span>
+                    </Link>
+                  </td>
+                  <td className="whitespace-nowrap px-5 py-3 text-[12.5px] text-(--text-body)">
+                    {client?.name ?? report.clientId}
+                  </td>
+                  <td className="t-num whitespace-nowrap px-5 py-3 text-[12.5px] text-(--text-body)">
+                    {report.reportDate}
+                  </td>
+                  <td className="t-num whitespace-nowrap px-5 py-3 text-right text-[12.5px] text-(--text-muted)">
+                    {formatBytes(report.size)}
+                  </td>
+                  <td className="whitespace-nowrap px-5 py-3">
+                    <Badge tone={statusTone(report.status)}>{report.status}</Badge>
+                  </td>
+                  <td className="px-5 py-3 text-right">
+                    <Link
+                      href={`/clients/${report.clientId}/events/${report.eventId}`}
+                      aria-label={`View ${report.fileName}`}
+                      className="inline-flex text-(--text-faint) transition-colors hover:text-(--accent)"
+                    >
+                      <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
-    </Card>
+
+      <div className="border-t border-(--line) px-5 py-2.5 text-[11.5px] text-(--text-faint)">
+        {reports.length} reports · Client-confidential
+      </div>
+    </section>
   );
 }
