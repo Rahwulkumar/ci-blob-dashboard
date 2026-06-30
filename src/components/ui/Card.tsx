@@ -1,9 +1,12 @@
 import type { HTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export function Card({ className, style, children, ...props }: HTMLAttributes<HTMLDivElement>) {
+const glassPanel =
+  "overflow-hidden rounded-3xl border border-[#dbe7fd] bg-white/80 shadow-[0_12px_40px_-12px_rgba(37,99,235,0.12),0_2px_8px_rgba(22,36,61,0.04)] backdrop-blur-xl";
+
+export function Card({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("surface", className)} style={style} {...props}>
+    <div className={cn(glassPanel, className)} {...props}>
       {children}
     </div>
   );
@@ -21,15 +24,10 @@ export function CardHeader({
   className?: string;
 }) {
   return (
-    <div
-      className={cn(
-        "flex items-center justify-between gap-3 border-b border-(--line) px-5 py-3.5",
-        className,
-      )}
-    >
+    <div className={cn("flex items-start justify-between gap-4 px-6 pt-5", className)}>
       <div className="min-w-0">
-        <h2 className="text-[13px] font-semibold text-(--text-heading)">{title}</h2>
-        {subtitle && <p className="mt-0.5 text-xs text-(--text-faint)">{subtitle}</p>}
+        <h2 className="text-lg font-bold tracking-tight text-[#16243d]">{title}</h2>
+        {subtitle && <p className="mt-1 text-sm text-[#6c7a93]">{subtitle}</p>}
       </div>
       {action && <div className="shrink-0">{action}</div>}
     </div>

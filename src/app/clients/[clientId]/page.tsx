@@ -29,14 +29,11 @@ export default async function ClientDetailPage({
   return (
     <AppShell>
       <nav className="mb-4 flex flex-wrap items-center gap-1 text-xs" aria-label="Breadcrumb">
-        <Link
-          className="text-(--text-muted) transition-colors hover:text-(--accent)"
-          href="/clients"
-        >
+        <Link className="text-[#6c7a93] transition-colors hover:text-[#2563eb]" href="/clients">
           Clients
         </Link>
-        <ChevronRight className="h-3 w-3 text-(--text-faint)" aria-hidden="true" />
-        <span className="font-medium text-(--text-heading)">{client.name}</span>
+        <ChevronRight className="h-3 w-3 text-[#97a3b8]" aria-hidden="true" />
+        <span className="font-medium text-[#16243d]">{client.name}</span>
       </nav>
 
       <header className="mb-8">
@@ -44,26 +41,24 @@ export default async function ClientDetailPage({
           <Avatar label={client.shortName} size="lg" />
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-[24px] font-semibold leading-8 tracking-tight text-(--text-heading)">
-                {client.name}
-              </h1>
+              <h1 className="text-2xl font-semibold leading-tight tracking-tight text-[#16243d]">{client.name}</h1>
               <Badge tone={client.status === "Active" ? "success" : "warning"}>
                 {client.status}
               </Badge>
             </div>
-            <p className="mt-0.5 text-[13px] text-(--text-muted)">
+            <p className="mt-1 text-sm text-[#6c7a93]">
               Anti-piracy monitoring and intelligence reporting
             </p>
           </div>
         </div>
-        <div className="mt-6 h-px bg-(--line)" aria-hidden="true" />
+        <div className="mt-6 h-px bg-[#e9edf4]" aria-hidden="true" />
       </header>
 
-      <dl className="mb-10 grid grid-cols-1 gap-px overflow-hidden rounded-(--radius) border border-(--line) bg-(--line) sm:grid-cols-3">
+      <dl className="mb-10 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[#e9edf4] bg-[#e9edf4] sm:grid-cols-3">
         {stats.map((stat) => (
-          <div key={stat.label} className="bg-white px-6 py-4.5">
-            <dt className="t-label-xs">{stat.label}</dt>
-            <dd className="t-num mt-2 text-[22px] font-semibold leading-7 text-(--text-heading)">
+          <div key={stat.label} className="bg-white px-6 py-5">
+            <dt className="text-xs font-bold uppercase tracking-[0.1em] text-[#97a3b8]">{stat.label}</dt>
+            <dd className="mt-2 font-mono text-2xl font-semibold leading-7 text-[#16243d]">
               {stat.value}
             </dd>
           </div>
@@ -71,10 +66,8 @@ export default async function ClientDetailPage({
       </dl>
 
       <div className="mb-3 flex items-baseline justify-between">
-        <h2 className="text-[15px] font-semibold tracking-tight text-(--text-heading)">
-          Event coverage
-        </h2>
-        <span className="text-xs text-(--text-faint)">
+        <h2 className="text-lg font-semibold tracking-tight text-[#16243d]">Event coverage</h2>
+        <span className="text-xs text-[#97a3b8]">
           {clientEvents.length} {clientEvents.length === 1 ? "event" : "events"}
         </span>
       </div>

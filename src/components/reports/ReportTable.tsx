@@ -12,48 +12,49 @@ function statusTone(status: ReportFile["status"]) {
 
 export function ReportTable({ reports }: { reports: ReportFile[] }) {
   return (
-    <Card className="overflow-hidden">
+    <Card>
       <CardHeader title="All reports" subtitle="Complete report history for this event" />
       <div className="overflow-x-auto">
-        <table className="w-full min-w-170 border-collapse text-left">
-          <thead className="border-b border-(--line) bg-(--surface-2)">
+        <table className="w-full min-w-[42rem] border-collapse text-left">
+          <thead className="border-b border-[#e9edf4] bg-[#f8fafd]">
             <tr>
-              <th className="t-label-xs px-5 py-2 font-semibold">Report</th>
-              <th className="t-label-xs px-5 py-2 font-semibold">Date</th>
-              <th className="t-label-xs px-5 py-2 font-semibold">Last updated</th>
-              <th className="t-label-xs px-5 py-2 text-right font-semibold">Size</th>
-              <th className="t-label-xs px-5 py-2 font-semibold">Status</th>
+              <th className="px-5 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[#97a3b8]">Report</th>
+              <th className="px-5 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[#97a3b8]">Date</th>
+              <th className="px-5 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[#97a3b8]">
+                Last updated
+              </th>
+              <th className="px-5 py-2 text-right text-xs font-bold uppercase tracking-[0.1em] text-[#97a3b8]">
+                Size
+              </th>
+              <th className="px-5 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[#97a3b8]">Status</th>
               <th className="px-5 py-2" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-(--border-muted)">
+          <tbody className="divide-y divide-[#eff2f7]">
             {reports.map((report) => (
-              <tr key={report.id} className="tr-hover">
+              <tr key={report.id} className="transition hover:bg-white">
                 <td className="max-w-90 px-5 py-3">
-                  <span
-                    className="block truncate text-[13px] font-medium text-(--text-heading)"
-                    title={report.fileName}
-                  >
+                  <span className="block truncate text-sm font-medium text-[#16243d]" title={report.fileName}>
                     {report.fileName}
                   </span>
                 </td>
-                <td className="t-num whitespace-nowrap px-5 py-3 text-[12.5px] text-(--text-body)">
+                <td className="whitespace-nowrap px-5 py-3 font-mono text-sm text-[#44546d]">
                   {report.reportDate}
                 </td>
-                <td className="t-num whitespace-nowrap px-5 py-3 text-[12.5px] text-(--text-muted)">
+                <td className="whitespace-nowrap px-5 py-3 font-mono text-sm text-[#6c7a93]">
                   {new Intl.DateTimeFormat("en-IN", {
                     dateStyle: "medium",
                     timeStyle: "short",
                   }).format(new Date(report.lastModified))}
                 </td>
-                <td className="t-num whitespace-nowrap px-5 py-3 text-right text-[12.5px] text-(--text-muted)">
+                <td className="whitespace-nowrap px-5 py-3 text-right font-mono text-sm text-[#6c7a93]">
                   {formatBytes(report.size)}
                 </td>
                 <td className="whitespace-nowrap px-5 py-3">
                   <Badge tone={statusTone(report.status)}>{report.status}</Badge>
                 </td>
                 <td className="whitespace-nowrap px-5 py-3 text-right">
-                  <button className="inline-flex items-center gap-1.5 text-xs font-medium text-(--text-muted) transition-colors hover:text-(--accent)">
+                  <button className="inline-flex items-center gap-1.5 text-xs font-medium text-[#6c7a93] transition-colors hover:text-[#2563eb] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563eb]">
                     <Download className="h-3.5 w-3.5" aria-hidden="true" />
                     Download
                   </button>
@@ -63,8 +64,8 @@ export function ReportTable({ reports }: { reports: ReportFile[] }) {
           </tbody>
         </table>
       </div>
-      <div className="border-t border-(--line) px-5 py-2.5 text-[11.5px] text-(--text-faint)">
-        {reports.length} {reports.length === 1 ? "report" : "reports"} · Client-confidential
+      <div className="border-t border-[#e9edf4] px-5 py-2.5 text-xs text-[#97a3b8]">
+        {reports.length} {reports.length === 1 ? "report" : "reports"} - Client-confidential
       </div>
     </Card>
   );

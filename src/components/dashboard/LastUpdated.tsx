@@ -25,15 +25,15 @@ export function LastUpdated() {
   };
 
   return (
-    <div className="flex items-center gap-2 text-xs text-(--text-muted)">
+    <div className="flex items-center gap-2 text-xs text-[#6c7a93]">
       <span>
-        Updated <span className="t-num text-(--text-body)">{lastUpdated}</span>
+        Updated <span className="font-mono text-[#44546d]">{lastUpdated}</span>
       </span>
       <button
         aria-label="Refresh data"
         title="Refresh"
         onClick={refresh}
-        className="rounded-md p-1 text-(--text-faint) transition-colors hover:bg-(--surface-3) hover:text-(--accent)"
+        className="rounded-md p-1 text-[#97a3b8] transition-colors hover:bg-[#f1f4f9] hover:text-[#2563eb] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563eb]"
       >
         <RefreshCw className={`h-3.5 w-3.5 ${refreshing ? "animate-spin" : ""}`} aria-hidden="true" />
       </button>

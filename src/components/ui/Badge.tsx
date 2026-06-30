@@ -3,13 +3,31 @@ import { cn } from "@/lib/utils";
 
 type Tone = "success" | "warning" | "error" | "info" | "neutral" | "blue";
 
-const configs: Record<Tone, { color: string; dot: string }> = {
-  success: { color: "#177245", dot: "#1ca35e" },
-  warning: { color: "#a8650b", dot: "#dc930f" },
-  error:   { color: "#c03342", dot: "#e25563" },
-  info:    { color: "#1d4fd8", dot: "#2563eb" },
-  blue:    { color: "#1d4fd8", dot: "#2563eb" },
-  neutral: { color: "#6c7a93", dot: "#97a3b8" },
+const toneClasses: Record<Tone, { badge: string; dot: string }> = {
+  success: {
+    badge: "bg-[#eef3fe] text-[#1d4fd8]",
+    dot: "bg-[#2563eb]",
+  },
+  warning: {
+    badge: "bg-[#f1f4f9] text-[#6c7a93]",
+    dot: "bg-[#97a3b8]",
+  },
+  error: {
+    badge: "bg-[#fdf1f2] text-[#c03342]",
+    dot: "bg-[#c03342]",
+  },
+  info: {
+    badge: "bg-[#eef3fe] text-[#1d4fd8]",
+    dot: "bg-[#2563eb]",
+  },
+  blue: {
+    badge: "bg-[#eef3fe] text-[#1d4fd8]",
+    dot: "bg-[#2563eb]",
+  },
+  neutral: {
+    badge: "bg-[#f1f4f9] text-[#6c7a93]",
+    dot: "bg-[#97a3b8]",
+  },
 };
 
 type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
@@ -18,20 +36,18 @@ type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
 };
 
 export function Badge({ tone = "neutral", showDot = true, className, children, ...props }: BadgeProps) {
-  const c = configs[tone];
+  const classes = toneClasses[tone];
+
   return (
     <span
-      className={cn("inline-flex items-center gap-1.5 text-xs font-medium", className)}
-      style={{ color: c.color }}
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold",
+        classes.badge,
+        className,
+      )}
       {...props}
     >
-      {showDot && (
-        <span
-          className="inline-block h-1.5 w-1.5 shrink-0 rounded-full"
-          style={{ background: c.dot }}
-          aria-hidden="true"
-        />
-      )}
+      {showDot && <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", classes.dot)} aria-hidden="true" />}
       {children}
     </span>
   );

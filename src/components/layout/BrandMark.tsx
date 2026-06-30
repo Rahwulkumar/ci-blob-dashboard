@@ -7,9 +7,8 @@ export function BrandMark({ withWordmark = true }: { withWordmark?: boolean }) {
         <rect x="15.5" y="2" width="4.5" height="18" rx="2.25" fill="#2563eb" />
       </svg>
       {withWordmark && (
-        <span className="text-[15px] font-semibold tracking-[-0.02em] text-(--text-heading)">
-          CII{" "}
-          <span className="font-normal text-(--text-muted)">Intelligence</span>
+        <span className="text-base font-semibold tracking-tight text-(--text-heading)">
+          CII <span className="font-normal text-(--text-muted)">Intelligence</span>
         </span>
       )}
     </span>
