@@ -34,14 +34,14 @@
   --red-bg: #fdf1f2;
   --red-border: #f3cdd2;
   --glass-border: #dbe7fd;
-  --shadow-air: 0 12px 40px -12px rgba(37, 99, 235, 0.12), 0 2px 8px rgba(22, 36, 61, 0.04);
-  --shadow-hover: 0 18px 50px -12px rgba(37, 99, 235, 0.18), 0 2px 8px rgba(22, 36, 61, 0.05);
+  --shadow-air: 0 10px 32px -10px rgba(22, 36, 61, 0.1);
+  --shadow-hover: 0 10px 32px -10px rgba(22, 36, 61, 0.1);
   --shadow-btn: 0 3px 10px rgba(37, 99, 235, 0.28);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-schibsted), system-ui, sans-serif;
+  --font-sans: var(--font-albert), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 }

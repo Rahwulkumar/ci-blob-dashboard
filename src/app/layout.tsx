@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
+import { Albert_Sans, JetBrains_Mono, Sora } from "next/font/google";
 import "./globals.css";
 
-const schibstedGrotesk = Schibsted_Grotesk({
-  variable: "--font-schibsted",
+const sora = Sora({
+  variable: "--font-sora",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const albertSans = Albert_Sans({
+  variable: "--font-albert",
   subsets: ["latin"],
   display: "swap",
 });
@@ -15,9 +21,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CII Intelligence - Skylight",
+  title: "CII Intelligence - Mosaic",
   description:
-    "Client-facing anti-piracy intelligence dashboard for report deliveries, event coverage, and storage activity.",
+    "Mosaic anti-piracy intelligence dashboard for report deliveries, event coverage, and storage activity.",
   keywords: ["cricket", "anti-piracy", "dashboard", "intelligence", "reports"],
   authors: [{ name: "CII Team" }],
 };
@@ -30,9 +36,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${schibstedGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${sora.variable} ${albertSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-[#fcfdff] font-[family-name:var(--font-schibsted)] text-[#44546d]">
+      <body className="flex min-h-full flex-col bg-[#f1f4f9] font-[family-name:var(--font-albert)] text-[#44546d]">
         {children}
       </body>
     </html>
