@@ -1,15 +1,11 @@
 import type { ReactNode } from "react";
-import { Sidebar } from "@/components/layout/Sidebar";
-import { Topbar } from "@/components/layout/Topbar";
+import { FloatingNav } from "@/components/layout/FloatingNav";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-950">
-      <Sidebar />
-      <div className="min-w-0 lg:pl-[66px]">
-        <Topbar />
-        <main className="mx-auto w-full max-w-[1440px] px-4 py-5 lg:px-5">{children}</main>
-      </div>
+    <div className="min-h-screen overflow-x-hidden bg-[#f1f4f9] text-[#44546d]">
+      <FloatingNav />
+      <main className="mx-auto w-full max-w-[1200px] px-5 pb-14 sm:px-7">{children}</main>
     </div>
   );
 }

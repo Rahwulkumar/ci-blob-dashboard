@@ -1,52 +1,44 @@
-import { KpiStrip } from "@/components/dashboard/KpiStrip";
-import { RecentReportsTable } from "@/components/dashboard/RecentReportsTable";
-import { WorkspaceCard } from "@/components/dashboard/WorkspaceCard";
+import { MosaicDashboard } from "@/components/dashboard/mosaic/MosaicDashboard";
+import type { CoverageSnapshot, MosaicTrendPoint } from "@/components/dashboard/mosaic/types";
 import { AppShell } from "@/components/layout/AppShell";
-import { PageHeader } from "@/components/layout/PageHeader";
-import { clients, events, reports, reportsByMonth } from "@/lib/mock-data";
+import { clients, events, reports } from "@/lib/mock-data";
+
+const mosaicTrend: MosaicTrendPoint[] = [
+  { month: "Feb", reports: 9, level: "level-1" },
+  { month: "Mar", reports: 14, level: "level-2" },
+  { month: "Apr", reports: 22, level: "level-3" },
+  { month: "May", reports: 18, level: "level-4" },
+  { month: "Jun", reports: 26, level: "level-5" },
+  { month: "Jul", reports: 31, level: "level-6", current: true },
+];
+
+const clientMonthReports = [
+  { clientId: "cricket-australia", reports: 18 },
+  { clientId: "jiohotstar", reports: 11 },
+  { clientId: "sri-lanka-cricket", reports: 2 },
+];
+
+const coverage: CoverageSnapshot = {
+  percent: 71,
+  label: "indexed",
+  items: [
+    { id: "indexed", label: "Indexed and delivered", value: 117, markerClassName: "bg-[#2563eb]" },
+    { id: "processing", label: "Processing", value: 2, markerClassName: "bg-[#6b96f3]" },
+    { id: "pending", label: "Pending review", value: 1, markerClassName: "bg-[#d9e0eb]" },
+  ],
+};
 
 export default function Home() {
-  const latestUpload = reports
-    .map((report) => report.reportDate)
-    .sort()
-    .at(-1);
-
   return (
     <AppShell>
-      <PageHeader
-        eyebrow="Overview"
-        title="Anti-Piracy Report Workspaces"
-        description="Monitor client folders, active events, report dates, and CSV files in Azure Blob Storage."
+      <MosaicDashboard
+        clients={clients}
+        clientMonthReports={clientMonthReports}
+        coverage={coverage}
+        events={events}
+        reports={reports}
+        trend={mosaicTrend}
       />
-
-      <KpiStrip
-        items={[
-          { label: "Clients", value: String(clients.length), delta: "+3", up: true },
-          { label: "Events", value: String(events.length), delta: "+12%", up: true },
-          { label: "Reports", value: String(reports.length), delta: "+18%", up: true },
-          { label: "Latest", value: latestUpload ?? "N/A", delta: "Live", up: true },
-        ]}
-      />
-
-      <div className="mb-4 flex items-end justify-between">
-        <div>
-          <h2 className="text-sm font-semibold tracking-[-0.01em] text-slate-950">Client Workspaces</h2>
-          <p className="mt-1 text-xs text-slate-500">Choose a client to inspect event folders and uploaded CSV reports.</p>
-        </div>
-        <div className="hidden rounded-md border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-500 md:block">
-          {reportsByMonth.at(-1)?.reports ?? 0} July uploads
-        </div>
-      </div>
-
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-        {clients.map((client) => (
-          <WorkspaceCard key={client.id} client={client} />
-        ))}
-      </div>
-
-      <div className="mt-4">
-        <RecentReportsTable reports={reports} />
-      </div>
     </AppShell>
   );
 }

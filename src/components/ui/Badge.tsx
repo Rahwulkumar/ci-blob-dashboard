@@ -1,27 +1,54 @@
 import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
+type Tone = "success" | "warning" | "error" | "info" | "neutral" | "blue";
+
+const toneClasses: Record<Tone, { badge: string; dot: string }> = {
+  success: {
+    badge: "bg-[#eef3fe] text-[#1d4fd8]",
+    dot: "bg-[#2563eb]",
+  },
+  warning: {
+    badge: "bg-[#f1f4f9] text-[#6c7a93]",
+    dot: "bg-[#97a3b8]",
+  },
+  error: {
+    badge: "bg-[#fdf1f2] text-[#c03342]",
+    dot: "bg-[#c03342]",
+  },
+  info: {
+    badge: "bg-[#eef3fe] text-[#1d4fd8]",
+    dot: "bg-[#2563eb]",
+  },
+  blue: {
+    badge: "bg-[#eef3fe] text-[#1d4fd8]",
+    dot: "bg-[#2563eb]",
+  },
+  neutral: {
+    badge: "bg-[#f1f4f9] text-[#6c7a93]",
+    dot: "bg-[#97a3b8]",
+  },
+};
+
 type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
-  tone?: "success" | "warning" | "error" | "info" | "neutral";
+  tone?: Tone;
+  showDot?: boolean;
 };
 
-const tones = {
-  success: "bg-green-50 text-green-700 ring-green-200",
-  warning: "bg-amber-50 text-amber-700 ring-amber-200",
-  error: "bg-red-50 text-red-700 ring-red-200",
-  info: "bg-blue-50 text-blue-700 ring-blue-200",
-  neutral: "bg-slate-100 text-slate-600 ring-slate-200",
-};
+export function Badge({ tone = "neutral", showDot = true, className, children, ...props }: BadgeProps) {
+  const classes = toneClasses[tone];
 
-export function Badge({ className, tone = "neutral", ...props }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ring-1",
-        tones[tone],
+        "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold",
+        classes.badge,
         className,
       )}
       {...props}
-    />
+    >
+      {showDot && <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", classes.dot)} aria-hidden="true" />}
+      {children}
+    </span>
   );
 }

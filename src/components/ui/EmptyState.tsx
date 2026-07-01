@@ -1,12 +1,11 @@
-import { FileSearch } from "lucide-react";
-import { Card } from "@/components/ui/Card";
+import { Inbox } from "lucide-react";
 
 export function EmptyState({ title, description }: { title: string; description: string }) {
   return (
-    <Card className="flex flex-col items-center justify-center px-6 py-12 text-center">
-      <FileSearch className="mb-3 h-8 w-8 text-blue-500" aria-hidden="true" />
-      <h3 className="text-sm font-semibold text-slate-950">{title}</h3>
-      <p className="mt-1 max-w-md text-sm text-slate-500">{description}</p>
-    </Card>
+    <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-(--line-strong) bg-(--surface-2) px-6 py-16 text-center">
+      <Inbox className="mb-3 h-5 w-5 text-(--text-faint)" strokeWidth={1.5} aria-hidden="true" />
+      <h3 className="text-sm font-medium text-(--text-heading)">{title}</h3>
+      <p className="mt-1 max-w-sm text-xs leading-5 text-(--text-muted)">{description}</p>
+    </div>
   );
 }

@@ -4,5 +4,4 @@ export const containerName =
 export const navItems = [
   { href: "/", label: "Dashboard", icon: "LayoutDashboard" },
   { href: "/clients", label: "Clients", icon: "Users" },
-  { href: "/upload", label: "Upload CSV", icon: "UploadCloud" },
 ] as const;

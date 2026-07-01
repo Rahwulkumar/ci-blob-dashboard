@@ -11,16 +11,22 @@ export function ReportBreadcrumb({
   eventName: string;
 }) {
   return (
-    <nav className="mb-4 flex flex-wrap items-center gap-2 text-sm text-slate-500" aria-label="Breadcrumb">
-      <Link className="font-medium text-blue-600 hover:text-blue-700" href="/clients">
+    <nav className="mb-4 flex flex-wrap items-center gap-1 text-xs" aria-label="Breadcrumb">
+      <Link
+        className="text-(--text-muted) transition-colors hover:text-(--accent)"
+        href="/clients"
+      >
         Clients
       </Link>
-      <ChevronRight className="h-4 w-4" aria-hidden="true" />
-      <Link className="font-medium text-blue-600 hover:text-blue-700" href={`/clients/${clientId}`}>
+      <ChevronRight className="h-3 w-3 text-(--text-faint)" aria-hidden="true" />
+      <Link
+        className="text-(--text-muted) transition-colors hover:text-(--accent)"
+        href={`/clients/${clientId}`}
+      >
         {clientName}
       </Link>
-      <ChevronRight className="h-4 w-4" aria-hidden="true" />
-      <span className="font-medium text-slate-700">{eventName}</span>
+      <ChevronRight className="h-3 w-3 text-(--text-faint)" aria-hidden="true" />
+      <span className="font-medium text-(--text-heading)">{eventName}</span>
     </nav>
   );
 }
