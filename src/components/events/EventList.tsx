@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { Card } from "@/components/ui/Card";
 import { formatNumber } from "@/lib/utils";
 import type { EventSeries } from "@/types/report";
 
@@ -8,39 +9,39 @@ const rowGrid =
 
 export function EventList({ events }: { events: EventSeries[] }) {
   return (
-    <div className="surface overflow-hidden">
-      <div className={`${rowGrid} border-b border-(--line) bg-(--surface-2) px-5 py-2`}>
-        <span className="t-label-xs">Event</span>
-        <span className="t-label-xs hidden text-right sm:block">Reports</span>
-        <span className="t-label-xs hidden text-right sm:block">Last report</span>
+    <Card>
+      <div className={`${rowGrid} border-b border-[#e9edf4] bg-[#f8fafd] px-5 py-2`}>
+        <span className="text-xs font-bold uppercase tracking-[0.1em] text-[#97a3b8]">Event</span>
+        <span className="hidden text-right text-xs font-bold uppercase tracking-[0.1em] text-[#97a3b8] sm:block">
+          Reports
+        </span>
+        <span className="hidden text-right text-xs font-bold uppercase tracking-[0.1em] text-[#97a3b8] sm:block">
+          Last report
+        </span>
         <span aria-hidden="true" />
       </div>
-      <div className="divide-y divide-(--border-muted)">
+      <div className="divide-y divide-[#eff2f7]">
         {events.map((event) => (
           <Link
             key={event.id}
             href={`/clients/${event.clientId}/events/${event.id}`}
-            className={`${rowGrid} row-link px-5 py-3.5`}
+            className={`${rowGrid} px-5 py-3.5 transition hover:bg-white`}
             aria-label={`View ${event.name}`}
           >
             <span className="min-w-0">
-              <span className="block truncate text-[13px] font-medium text-(--text-heading)">
-                {event.name}
-              </span>
-              <span className="mt-0.5 block text-[11.5px] text-(--text-faint)">
-                {event.dateRange}
-              </span>
+              <span className="block truncate text-sm font-medium text-[#16243d]">{event.name}</span>
+              <span className="mt-0.5 block text-xs text-[#97a3b8]">{event.dateRange}</span>
             </span>
-            <span className="t-num hidden text-right text-[13px] text-(--text-body) sm:block">
+            <span className="hidden text-right font-mono text-sm text-[#44546d] sm:block">
               {formatNumber(event.reportsCount)}
             </span>
-            <span className="t-num hidden text-right text-[12.5px] text-(--text-muted) sm:block">
+            <span className="hidden text-right font-mono text-sm text-[#6c7a93] sm:block">
               {event.lastReportDate}
             </span>
-            <ChevronRight className="h-4 w-4 justify-self-end text-(--text-faint)" aria-hidden="true" />
+            <ChevronRight className="h-4 w-4 justify-self-end text-[#97a3b8]" aria-hidden="true" />
           </Link>
         ))}
       </div>
-    </div>
+    </Card>
   );
 }

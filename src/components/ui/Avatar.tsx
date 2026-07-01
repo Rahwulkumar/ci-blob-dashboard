@@ -11,15 +11,15 @@ export function Avatar({
   className?: string;
 }) {
   const sizes = {
-    sm: "h-7 w-7 rounded-md text-[10px]",
-    md: "h-9 w-9 rounded-lg text-[11.5px]",
-    lg: "h-12 w-12 rounded-[10px] text-[15px]",
+    sm: "h-8 w-8 text-xs",
+    md: "h-10 w-10 text-sm",
+    lg: "h-12 w-12 text-base",
   } as const;
 
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 select-none items-center justify-center border border-[#dbe5f8] bg-(--accent-soft) font-semibold text-(--accent-dark)",
+        "inline-flex shrink-0 select-none items-center justify-center rounded-2xl border border-[#dbe7fd] bg-[#eef3fe] font-bold text-[#1d4fd8]",
         sizes[size],
         className,
       )}

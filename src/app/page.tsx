@@ -1,121 +1,44 @@
-import Link from "next/link";
-import { ClientRows, ClientRowsHeader } from "@/components/clients/ClientRows";
-import { KpiStrip } from "@/components/dashboard/KpiStrip";
-import { LastUpdated } from "@/components/dashboard/LastUpdated";
-import { RecentReportsTable } from "@/components/dashboard/RecentReportsTable";
-import { ReportsTrendChart } from "@/components/dashboard/ReportsTrendChart";
+import { MosaicDashboard } from "@/components/dashboard/mosaic/MosaicDashboard";
+import type { CoverageSnapshot, MosaicTrendPoint } from "@/components/dashboard/mosaic/types";
 import { AppShell } from "@/components/layout/AppShell";
-import { PageHeader } from "@/components/layout/PageHeader";
-import { CardHeader } from "@/components/ui/Card";
-import { clients, events, reports, reportsByMonth } from "@/lib/mock-data";
+import { clients, events, reports } from "@/lib/mock-data";
 
-const services = [
-  "Report ingestion",
-  "Indexing engine",
-  "Monitoring pipeline",
-  "Delivery service",
-] as const;
+const mosaicTrend: MosaicTrendPoint[] = [
+  { month: "Feb", reports: 9, level: "level-1" },
+  { month: "Mar", reports: 14, level: "level-2" },
+  { month: "Apr", reports: 22, level: "level-3" },
+  { month: "May", reports: 18, level: "level-4" },
+  { month: "Jun", reports: 26, level: "level-5" },
+  { month: "Jul", reports: 31, level: "level-6", current: true },
+];
+
+const clientMonthReports = [
+  { clientId: "cricket-australia", reports: 18 },
+  { clientId: "jiohotstar", reports: 11 },
+  { clientId: "sri-lanka-cricket", reports: 2 },
+];
+
+const coverage: CoverageSnapshot = {
+  percent: 71,
+  label: "indexed",
+  items: [
+    { id: "indexed", label: "Indexed and delivered", value: 117, markerClassName: "bg-[#2563eb]" },
+    { id: "processing", label: "Processing", value: 2, markerClassName: "bg-[#6b96f3]" },
+    { id: "pending", label: "Pending review", value: 1, markerClassName: "bg-[#d9e0eb]" },
+  ],
+};
 
 export default function Home() {
-  const latestReport = reports.map((report) => report.reportDate).sort().at(-1);
-  const activeClients = clients.filter((client) => client.status === "Active").length;
-
   return (
     <AppShell>
-      <PageHeader
-        title="Dashboard"
-        description="Portfolio performance, event coverage, and the latest intelligence reports."
-        actions={<LastUpdated />}
+      <MosaicDashboard
+        clients={clients}
+        clientMonthReports={clientMonthReports}
+        coverage={coverage}
+        events={events}
+        reports={reports}
+        trend={mosaicTrend}
       />
-
-      <KpiStrip
-        items={[
-          { label: "Clients", value: String(clients.length), delta: "+3" },
-          { label: "Active events", value: String(events.length), delta: "+12%" },
-          { label: "Reports delivered", value: String(reports.length), delta: "+18%" },
-          {
-            label: "Latest report",
-            value: latestReport ?? "N/A",
-            delta: "Live",
-            description: "synced automatically",
-          },
-        ]}
-      />
-
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-        <section className="surface overflow-hidden">
-          <CardHeader
-            title="Report volume"
-            subtitle="Reports delivered per month"
-            action={<span className="text-[11px] text-(--text-faint)">Last 6 months</span>}
-          />
-          <div className="px-5 pb-4 pt-3">
-            <ReportsTrendChart data={[...reportsByMonth]} />
-          </div>
-        </section>
-
-        <aside className="flex flex-col gap-6">
-          <section className="surface overflow-hidden">
-            <CardHeader title="This week" />
-            <div className="divide-y divide-(--border-muted)">
-              {[
-                ["Reports indexed today", "4"],
-                ["Pending review", "1"],
-                ["Active clients", String(activeClients)],
-                ["Events in coverage", String(events.length)],
-              ].map(([label, value]) => (
-                <div key={label} className="flex items-center justify-between px-5 py-2.75">
-                  <span className="text-xs text-(--text-muted)">{label}</span>
-                  <span className="t-num text-[13px] font-semibold text-(--text-heading)">
-                    {value}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="surface overflow-hidden">
-            <CardHeader
-              title="System status"
-              action={
-                <span className="flex items-center gap-1.5 text-[11px] font-medium text-(--success)">
-                  <span className="dot dot-green h-1.5 w-1.5" aria-hidden="true" />
-                  Operational
-                </span>
-              }
-            />
-            <div className="divide-y divide-(--border-muted)">
-              {services.map((service) => (
-                <div key={service} className="flex items-center justify-between px-5 py-2.75">
-                  <span className="text-xs text-(--text-muted)">{service}</span>
-                  <span className="dot dot-green h-1.5 w-1.5" aria-hidden="true" />
-                </div>
-              ))}
-            </div>
-          </section>
-        </aside>
-      </div>
-
-      <section className="surface mt-6 overflow-hidden">
-        <CardHeader
-          title="Clients"
-          subtitle={`${activeClients} of ${clients.length} active`}
-          action={
-            <Link
-              href="/clients"
-              className="text-xs font-medium text-(--accent) transition-colors hover:text-(--accent-dark)"
-            >
-              View all
-            </Link>
-          }
-        />
-        <ClientRowsHeader />
-        <ClientRows clients={clients} />
-      </section>
-
-      <div className="mt-6">
-        <RecentReportsTable reports={reports} />
-      </div>
     </AppShell>
   );
 }

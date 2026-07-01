@@ -40,7 +40,7 @@ export default async function EventDetailPage({
         title={event.name}
         description={`Monitoring intelligence and enforcement reporting for ${client.name}.`}
         actions={
-          <span className="t-num rounded-sm border border-(--line) bg-(--surface-2) px-2.5 py-1 text-xs text-(--text-muted)">
+          <span className="rounded-lg border border-[#e9edf4] bg-[#f8fafd] px-3 py-1 font-mono text-xs text-[#6c7a93]">
             {event.dateRange}
           </span>
         }
